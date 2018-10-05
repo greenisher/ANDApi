@@ -1,0 +1,115 @@
+swagger: "2.0"
+info:
+  description: The swagger file for our server code.
+  version: "1.0.0"
+  title: Swagger REST Article
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+#paths supported by the server application
+paths:
+  /customers:
+    get:
+      operationId: "customers.read"
+      tags:
+        - "Customers"
+      summary: "The customer data structure."
+      description: "Read the customer data structure."
+      responses:
+        200:
+          description: "Successful read customer list operation"
+          schema:
+            type: "array"
+            items:
+              properties:
+                name:
+                  type: "string"
+                id:
+                  type: "integer"
+                phone_number:
+                  type: "string"
+                timestamp:
+                  type: "string"
+
+
+  /customers/{id}:
+    get:
+      operationId: customers.read_id
+      tags:
+       - Customers
+      summary: The ID from the customer data structure
+      description: Read the ID from the customer data structure
+      parameters:
+        - name: id
+          in: path
+          description: id to get from list
+          type: integer
+          required: True
+      responses:
+        '200':
+          description: Successfully read operation
+          schema:
+            properties:
+              name:
+                type: string
+              id:
+                type: integer
+              phone_number:
+                type: string
+              timestamp:
+                type: string
+
+  /customers/{name}:
+    get:
+      operationId: customers.read_name
+      tags:
+        - customers
+      summary: The name from the customer data structure
+      description: pull a customer and their phone_number
+      parameters:
+        - name: name
+          in: path
+          description: get the name from the customer structure
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully pull a person from the people list operation
+          schema:
+            properties:
+              name:
+                type: string
+              id:
+                type: integer
+              phone_number:
+                type: string
+              timestamp:
+                type: string
+   put:
+     operationId: customer.addPhone
+     tags:
+       - customers
+    summary: Activate a new phone line for a customer in the list
+    description: Activate a new phone line for a customer
+    parameters:
+      - name: name
+        in: path
+        description: Name of the person to update in the list
+        type: string
+        required: True
+      - name: customer
+        in: body
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            phone_number:
+              type: string
+    responses:
+      200:
+        description: Successfully activated new phone line
